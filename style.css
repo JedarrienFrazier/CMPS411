@@ -1,6 +1,5 @@
 
 body {
-    background: #2C814D;
     color: #333;
     font-size: 14px;
     font-family: 'Raleway', sans-serif;
@@ -44,19 +43,6 @@ textarea {
     resize: none;
 }
  
-button {
-    background: #528bff;
-    color: #fff;
-    position: relative;
-    top: 0px;
-    width: 64px;
-    height: 64px;
-    line-height: 38px;
-    border-radius: 100%;
-}
-th{
-    background: #e9c225;
-}
 td {
     background: #ffffff;
 }
