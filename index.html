@@ -50,7 +50,117 @@
                     <h3 class="panel-title">Equipment Check In/Out</h3>
                   </div>
                   <div class="col col-xs-6 text-right">
-                      <a id="add_row" class="btn btn-default pull-right" href='application.html'>Add Row</a>
+					  <!-- Trigger the modal with a button -->
+					  <button type="button" class="btn-lg" data-toggle="modal" data-target="#myModal">Add Row</button>
+
+					  <!-- Modal -->
+					  <div class="modal fade" id="myModal" role="dialog">
+						<div class="modal-dialog modal-lg">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal">&times;</button>
+							  <h4 class="modal-title">Instrument Rentals</h4>
+							</div>	  
+
+						  <h3>Add a new instrument</h3>
+
+						  <form id="InstrumentForm">
+							<div class="form-group">
+							  <label for="talkBRAND">Brand</label>
+							  <input class="form-control" id="talkBRAND" placeholder="Brand of the instrument">
+							</div>
+
+							<div class="form-group">
+							  <label for="talkCONDITION">Condition</label>
+							  <input class="form-control" id="talkCONDITION" placeholder="Instrument's current condition">
+							</div>
+
+							<div class="form-group">
+							  <label for="talkHASMOUTHPIECE">Has Mouthpiece</label>
+							  <input class="form-control" id="talkHASMOUTHPIECE" placeholder="Does the instrument have a mouthpiece Y/N">
+							</div>
+							
+							<div class="form-group">
+							  <label for="talkNOTES">Notes</label>
+							  <input class="form-control" id="talkNOTES" placeholder="Notes on the instrument's current status">
+							</div>
+							
+							<div class="form-group">
+							  <label for="talkTYPE">Type</label>
+							  <input class="form-control" id="talkTYPE" placeholder="Type of instrument">
+							</div>
+							
+							<!-- When you click this button, trigger the submit event on this form. -->
+							<button TYPE="submit" class="btn btn-default">Submit</button>
+							
+						<script>
+
+							// Reference to the Instruments object in your Firebase database
+							var Instruments = firebase.database().ref("Instruments");
+
+							// Save a new Instrument to the database, using the input in the form
+							var submitInstrument = function () {
+
+							  // Get input values from each of the form elements
+							  var BRAND = $("#talkBRAND").val();
+							  var CONDITION = $("#talkCONDITION").val();
+							  var HASMOUTHPIECE = $("#talkHASMOUTHPIECE").val();
+							  var NOTES = $("#talkNOTES").val();
+							  var TYPE = $("#talkTYPE").val();
+
+							  // Push a new Instrument to the database using those values
+							  Instruments.push({
+								"BRAND": BRAND,
+								"CONDITION": CONDITION,
+								"HAS MOUTHPIECE": HASMOUTHPIECE,
+								"NOTES": NOTES,
+								"TYPE": TYPE
+							  });
+							};
+
+							// Get the single most recent Instrument from the database and
+							// update the table with its values. This is called every time the child_added
+							// event is triggered on the Instruments Firebase reference, which means
+							// that this will update EVEN IF you don't refresh the page. Magic.
+							Instruments.limitToLast(1).on('child_added', function(childSnapshot) {
+							  // Get the Instrument data from the most recent snapshot of data
+							  // added to the Instruments list in Firebase
+							  Instrument = childSnapshot.val();
+
+							  // Update the HTML to display the Instrument text
+							  $("#BRAND").html(Instrument.BRAND)
+							  $("#CONDITION").html(Instrument.CONDITION)
+							  $("#HASMOUTHPIECE").html(Instrument.HASMOUTHPIECE)
+							  $("#NOTES").html(Instrument.NOTES)
+							  $("#TYPE").html(Instrument.TYPE)
+
+							  // Make the link actually work and direct to the URL provided
+							  //$("#link").attr("href", Instrument.link)
+							});
+
+							// When the window is fully loaded, call this function.
+							// Note: because we are attaching an event listener to a particular HTML element
+							// in this function, we can't do that until the HTML element in question has
+							// been loaded. Otherwise, we're attaching our listener to nothing, and no code
+							// will run when the submit button is clicked.
+							$(window).load(function () {
+
+							  // Find the HTML element with the id InstrumentForm, and when the submit
+							  // event is triggered on that element, call submitInstrument.
+							  $("#InstrumentForm").submit(submitInstrument);
+
+							});						
+						
+						</script>
+							
+							
+						  </form>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
                   </div>
                 </div>
               </div>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SELU Music Department Management System</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/MUSA_panel-table.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="assets/css/MUSA_panel-table1.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://use.fontawesome.com/8c2a971715.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAbvrZbVhmE_4zJe4KlSrsdSDOr4i0560c",
+        authDomain: "cmps-411-music-department-ms.firebaseapp.com",
+        databaseURL: "https://cmps-411-music-department-ms.firebaseio.com",
+        projectId: "cmps-411-music-department-ms",
+        storageBucket: "cmps-411-music-department-ms.appspot.com",
+        messagingSenderId: "122196121534"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                    <thead>
+                        <tr >
+                            <th class="text-center">
+                                Instrument Type
+                            </th>
+                            <th class="text-center">
+                                Instrument Brand
+                            </th>
+                            <th class="text-center">
+                                Condition
+                            </th>
+                            <th class="text-center">
+                                Has Mouthpiece
+                            </th>
+                            <th class="text-center">
+                                Notes/Description
+                            </th>
+                            <th class="text-center">
+                                 
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="table_body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a id="add_row" class="btn btn-default pull-right">Add Row</a>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="indexFB.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 $(document).ready(function(){
     var rootRef = firebase.database().ref().child("Instruments");
-    var add_row = document.getElementById("add_row");
+    var add_row = document.getElementById("add_row"); 
     
     function addbtnClick(){
         var pushData = { }
