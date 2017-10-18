@@ -7,6 +7,10 @@ $(document).ready(function(){
         
         rootRef.push().set();
     }
+	
+	function editBtnClick(){
+		
+	}
     
     rootRef.on("child_added", snap =>{
         
@@ -15,23 +19,26 @@ $(document).ready(function(){
         var condition = snap.child("CONDITION").val();
         var mouthpiece = snap.child("HAS MOUTHPIECE").val();
         var notes = snap.child("NOTES").val();
-        
-        $('button').off().on('click',function () {
-            var s = $(this).closest("tr").find(".nameq").text();
-            $(this).closest('tr').remove();
-            var query = rootRef.ref().child('Instruments').orderByKey();
-            query.once("value")
-                .then(function(snapshot) {
-                    snapshot.forEach(function(childSnapshot) {
-                        var key = childSnapshot.key;
-                        var childData = childSnapshot.child('TYPE').val();
-                        if(childData==s) {
-                            rootRef.ref().child('Instruments').child(key).remove();
-                        }
-                    });
-                });
+		var key = snap.key;
+		
+		//remove button
+        $('#removebtn').off().on('click',function () {
+			var id = $(this).closest('tr').attr("id"); //retrieves the key from the id on tr element
+            $(this).closest('tr').remove(); //removes element from UI
+			rootRef.child(id).remove(); //removes from DB
+			
+			
         });
-        $('#table_body').append('<tr><td class="nameq">' + type + '</td><td>' + brand + '</td><td>' + condition + '</td><td>' + mouthpiece + '</td><td>' + notes + '</td><td><button>Remove</button></td></tr>');
+		
+		//edit button
+		$('#editbtn').off().on('click',function () {
+			alert("EDIT!");
+			var id = $(this).closest('tr').attr("id"); //retrieves the key from the id on tr element
+			rootRef.child(id).update(); //removes from DB
+			
+			
+        });
+        $('#table_body').append('<tr id="'+ key +'"><td class="nameq">' + type + '</td><td>' + brand + '</td><td>' + condition + '</td><td>' + mouthpiece + '</td><td>' + notes + '</td><td><button id="removebtn">Remove</button></td><td><button id="editbtn">Edit</button></td></tr>');
     })
     
 });
