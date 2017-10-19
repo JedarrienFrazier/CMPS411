@@ -49,7 +49,6 @@
     <p></p> <!-- what is this line for? -->
         
     <h1>Music Department's Equipment Management System</h1>
-    
             <div class="panel panel-default panel-table">
               <div class="panel-heading">
                 <div class="row">
@@ -57,9 +56,8 @@
                     <h3 class="panel-title">Equipment Check In/Out</h3>
                   </div>
                   <div class="col col-xs-6 ">
-					  <!-- Trigger the modal with a button -->
-					  <button type="button" class="btn-lg" data-toggle="modal" data-target="#myModal">Add Row</button>
-
+					  <!-- Trigger the modal with a button 
+					  <button type="button" class="btn-lg" data-toggle="modal" data-target="#myModal" onclick="onAddClick()">Add Row</button>-->
 					  <!-- Modal -->
 					  <div class="modal fade" id="myModal" role="dialog">
 						<div class="modal-dialog modal-lg">
@@ -127,71 +125,7 @@
 							
 							<!-- When you click this button, trigger the submit event on this form. -->
 							<button TYPE="submit" class="btn btn-default">Submit</button>
-						<script>
-
-							// Reference to the Instruments object in your Firebase database
-							var Instruments = firebase.database().ref("Instruments");
-
-							// Save a new Instrument to the database, using the input in the form
-							var submitInstrument = function () {
-
-							  // Get input values from each of the form elements
-							  var BRAND = $("#talkBRAND").val();
-							  var CONDITION = $("#talkCONDITION").val();
-                              var HASMOUTHPIECE
-                              if(document.getElementById('HASMOUTHPIECE_True').checked) {
-                                HASMOUTHPIECE = $("#HASMOUTHPIECE_True").val();
-                              }else if(document.getElementById('HASMOUTHPIECE_False').checked) {
-                                HASMOUTHPIECE = $("#HASMOUTHPIECE_False").val();
-                              } 
-							  var NOTES = $("#talkNOTES").val();
-							  var TYPE = $("#talkTYPE").val();
-
-							  // Push a new Instrument to the database using those values
-							  Instruments.push({
-								"BRAND": BRAND,
-								"CONDITION": CONDITION,
-								"HAS MOUTHPIECE": HASMOUTHPIECE,
-								"NOTES": NOTES,
-								"TYPE": TYPE
-							  });
-							};
-
-							// Get the single most recent Instrument from the database and
-							// update the table with its values. This is called every time the child_added
-							// event is triggered on the Instruments Firebase reference, which means
-							// that this will update EVEN IF you don't refresh the page. Magic.
-							Instruments.limitToLast(1).on('child_added', function(childSnapshot) {
-							  // Get the Instrument data from the most recent snapshot of data
-							  // added to the Instruments list in Firebase
-							  Instrument = childSnapshot.val();
-
-							  // Update the HTML to display the Instrument text
-							  $("#BRAND").html(Instrument.BRAND)
-							  $("#CONDITION").html(Instrument.CONDITION)
-							  $("#HASMOUTHPIECE").html(Instrument.HASMOUTHPIECE)
-							  $("#NOTES").html(Instrument.NOTES)
-							  $("#TYPE").html(Instrument.TYPE)
-
-							  // Make the link actually work and direct to the URL provided
-							  //$("#link").attr("href", Instrument.link)
-							});
-
-							// When the window is fully loaded, call this function.
-							// Note: because we are attaching an event listener to a particular HTML element
-							// in this function, we can't do that until the HTML element in question has
-							// been loaded. Otherwise, we're attaching our listener to nothing, and no code
-							// will run when the submit button is clicked.
-							$(window).load(function () {
-
-							  // Find the HTML element with the id InstrumentForm, and when the submit
-							  // event is triggered on that element, call submitInstrument.
-							  $("#InstrumentForm").submit(submitInstrument);
-
-							});						
 						
-						</script>
-							
 							
 						  </form>
 							<div class="modal-footer">
@@ -226,9 +160,59 @@
                             <th class="text-center">
                                 Notes/Description
                             </th>
-                            <th class="text-center">
+                            <th class="text-center" id="addButton">
                                  
                             </th>
+                        </tr>
+                            <th class="text-center">
+                                <form><input id = "tTYPE" type="text" value="TYPE"></form> 
+                            </th>
+                            <th class="text-center">
+                                <form><input id="tBRAND" type="text" value="BRAND"></form> 
+                            </th>
+                            <th class="text-center">
+                                <select id="tCONDITION">
+                                  <option value="" disabled selected>-</option>
+                                  <option value="New">New</option>
+                                  <option value="Good">Good</option>
+                                  <option value="Fine">Fine</option>
+                                  <option value="Works">Works</option>
+                                  <option value="Poor">Poor</option>
+                                  <option value="???">???</option>
+                                </select>
+                            </th>
+                            <th class="text-center">
+                                <select id="HASMOUTHPIECE">
+                                  <option value="" disabled selected>-</option>
+                                  <option value="true">Yes</option>
+                                  <option value="false">No</option>
+                                </select>
+                            </th>
+                            <th class="text-center">
+                                <form><input id="tNOTES" type="text" value="NOTES"></form> 
+                            </th>
+                            <th class="text-center">
+                                <button class = "btn btn-default" type="submit" onclick="addFunction()">ADD</button>
+                            </th>
+                        <script>
+                            function addFunction(){ 
+                                var Instruments = firebase.database().ref("Instruments");
+                                var BRAND = $("#tBRAND").val();
+                                var CONDITION = $("#tCONDITION").val();
+                                var HASMOUTHPIECE = $("#HASMOUTHPIECE").val();
+                                var NOTES = $("#tNOTES").val();
+                                var TYPE = $("#tTYPE").val();
+                                Instruments.push({
+								"BRAND": BRAND,
+								"CONDITION": CONDITION,
+								"HAS MOUTHPIECE": HASMOUTHPIECE,
+								"NOTES": NOTES,
+								"TYPE": TYPE
+							  });
+                                window.location.reload();
+                            }
+                        </script>
+                        <tr>                            
                         </tr>
                     </thead>
                     <tbody id="table_body">
