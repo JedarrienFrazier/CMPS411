@@ -5,21 +5,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SELU Music Department Management System</title>
+    
+    <!-- TODO: go through these, see which are no longer in use--> 
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/MUSA_panel-table.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="assets/css/MUSA_panel-table1.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="indexStyle.css">
+    <!-- <link rel="stylesheet" href="assets/css/styles.css"> -->
+    <!-- <link rel="stylesheet" href="indexStyle.css"> -->
+    <!----------------------------------------------------------->
+    <link rel="stylesheet" href="tingle.min.css"> <!-- style sheet for tingle -->
 </head>
 
 <body>
-    <script src="assets/js/jquery.min.js"></script>
+    <!-- FIRE BASE -->
     <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
     <script>
-      // Initialize Firebase
       var config = {
         apiKey: "AIzaSyAbvrZbVhmE_4zJe4KlSrsdSDOr4i0560c",
         authDomain: "cmps-411-music-department-ms.firebaseapp.com",
@@ -30,17 +33,23 @@
       };
       firebase.initializeApp(config);
     </script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
+    <!-- J QUERY-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <!-- TINGLE -js only modals- -->
+    <script src="tingle.min.js"></script>
+    <!-- BOOTSTRAP -->
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- CUSTOM SCRIPTS HERE -->
+    <script src="indexFB.js"></script>
 	
 	<div class="container">
     <div class="row">
     
-    <p></p>
+    <p></p> <!-- what is this line for? -->
+        
     <h1>Music Department's Equipment Management System</h1>
     
-        
-
             <div class="panel panel-default panel-table">
               <div class="panel-heading">
                 <div class="row">
@@ -118,7 +127,6 @@
 							
 							<!-- When you click this button, trigger the submit event on this form. -->
 							<button TYPE="submit" class="btn btn-default">Submit</button>
-							
 						<script>
 
 							// Reference to the Instruments object in your Firebase database
@@ -197,9 +205,6 @@
               </div>
               <div class="panel-body">
                 <table class="table table-striped table-bordered table-list">
-                
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-12 table-responsive">
@@ -232,7 +237,5 @@
             </div>
         </div>
     </div></div>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="indexFB.js"></script>
 </body>
 </html>
