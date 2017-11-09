@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SELU Music Department Management System</title>
+    
+    <!-- TODO: go through these, see which are no longer in use--> 
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/MUSA_panel-table.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="assets/css/MUSA_panel-table1.css">
+    <!-- <link rel="stylesheet" href="assets/css/styles.css"> -->
+    <!-- <link rel="stylesheet" href="indexStyle.css"> -->
+    <!----------------------------------------------------------->
+    <link rel="stylesheet" href="/tingle/tingle.min.css"> <!-- style sheet for tingle -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="background-color: #006633">
+    <!-- FIRE BASE -->
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyCaidUniMOrTAEewHgbUrWCocYiYjbIUfQ",
+		authDomain: "html-test-4a84f.firebaseapp.com",
+		databaseURL: "https://html-test-4a84f.firebaseio.com",
+		projectId: "html-test-4a84f",
+		storageBucket: "html-test-4a84f.appspot.com",
+		messagingSenderId: "284033266639"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <!-- J QUERY-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <!-- TINGLE -js only modals- -->
+    <script src="/tingle/tingle.min.js"></script>
+    <!-- BOOTSTRAP -->
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- CUSTOM SCRIPTS HERE -->
+    <script src="indexFB.js"></script>
+	
+	<div class="container">
+    <div class="row">
+    
+    <p></p> <!-- what is this line for? -->
+        
+    <h1><font color=#eea236>Southeastern Louisiana University</font></h1>
+            <div class="panel panel-default panel-table">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col col-md-6">
+                    <h3 class="panel-title" style="color: black">Music Equipment Check In/Out</h3>
+                  </div>
+                  <div class="col col-xs-6 ">
+					  <!-- Trigger the modal with a button 
+					  <button type="button" class="btn-lg" data-toggle="modal" data-target="#myModal" onclick="onAddClick()">Add Row</button>-->
+					  <!-- Modal -->
+					  <div class="modal fade" id="myModal" role="dialog">
+						<div class="modal-dialog modal-lg">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  
+							  <h4 class="modal-title" align>Instrument Rentals</h4>
+							</div>	  
+
+						  <h3>Add a new instrument</h3>
+
+						  <form id="InstrumentForm">
+							<div class="form-group">
+							  <label for="talkBRAND">Brand</label>
+							  <input class="form-control" id="talkBRAND" placeholder="Brand of the instrument">
+							</div>
+
+							<div class="form-group">
+							<label for="talkCONDITION">Condition</label>
+							  <!-- <input class="form-control" id="talkCONDITION" placeholder="Type of instrument"> -->
+                                <select id="talkCONDITION">
+                                  <option value="" disabled selected>Select your option</option>
+                                  <option value="New">New</option>
+                                  <option value="Good">Good</option>
+                                  <option value="Fine">Fine</option>
+                                  <option value="Works">Works</option>
+                                  <option value="Poor">Poor</option>
+                                  <option value="Bad">Bad</option>
+                                  <option value="???">???</option>
+                                </select>
+							</div>
+
+							<div class="form-group">
+							  <label for="talkHASMOUTHPIECE">Does the instrument have a mouthpiece?</label>
+							  <label><input type="radio" name="mouthPiece"  id="HASMOUTHPIECE_True" value="true" >Yes</label>
+                              <label><input type="radio" name="mouthPiece" id="HASMOUTHPIECE_False" value="false" >No</label>
+							</div>
+							
+							<div class="form-group">
+							  <label for="talkNOTES">Notes</label>
+							  <input class="form-control" id="talkNOTES" placeholder="Notes on the instrument's current status">
+							</div>
+							
+							<div class="form-group">
+							  <label for="talkTYPE">Type</label>
+							  <!-- <input class="form-control" id="talkTYPE" placeholder="Type of instrument"> -->
+                                <select id="talkTYPE">
+                                  <option value="" disabled selected>Select your option</option>
+                                  <option value="Baritone">Baritone</option>
+                                  <option value="Tuba">Tuba</option>
+                                  <option value="Cornet">Cornet</option>
+                                  <option value="Euphonium">Euphonium</option>
+                                  <option value="Horn">Horn</option>
+                                  <option value="Mellophone">Mellophone</option>
+                                  <option value="Sousaphone">Sousaphone</option>
+                                  <option value="Trombone">Trombone</option>
+                                  <option value="Clarinet">Clarinet</option>
+                                  <option value="Flute">Flute</option>
+                                  <option value="Piccolo">Piccolo</option>
+                                  <option value="Saxophone">Saxophone</option>
+                                  <option value="Keyboard">Keyboard</option>
+                                  <option value="Percussion">Percussion</option>
+                                </select>
+							</div>
+							
+							<!-- When you click this button, trigger the submit event on this form. -->
+							<button TYPE="submit" class="btn btn-default">Submit</button>
+						
+							
+						  </form>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped table-bordered table-list">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                    <thead>
+                        <tr >
+                            <th class="text-center">
+                                Instrument Serial #
+                            </th>
+                            <th class="text-center">
+                                Instrument Type
+                            </th>
+                            <th class="text-center">
+                                Instrument Brand
+                            </th>
+                            <th class="text-center">
+                                Condition
+                            </th>
+                            <th class="text-center">
+                                Has Mouthpiece
+                            </th>
+                            <th class="text-center">
+                                Notes/Description
+                            </th>
+                            <th class="text-center" id="addButton">
+                                 
+                            </th>
+                        </tr>
+                            <th class="text-center">
+                                <form><input id = "tSERIAL" type="text" value="TYPE"></form> 
+                            </th>
+                            <th class="text-center">
+                                <form><input id = "tTYPE" type="text" value="TYPE"></form> 
+                            </th>
+                            <th class="text-center">
+                                <form><input id="tBRAND" type="text" value="BRAND"></form> 
+                            </th>
+                            <th class="text-center">
+                                <select id="tCONDITION">
+                                  <option value="" disabled selected>-</option>
+                                  <option value="New">New</option>
+                                  <option value="Good">Good</option>
+                                  <option value="Fine">Fine</option>
+                                  <option value="Works">Works</option>
+                                  <option value="Poor">Poor</option>
+                                  <option value="???">???</option>
+                                </select>
+                            </th>
+                            <th class="text-center">
+                                <select id="HASMOUTHPIECE">
+                                  <option value="" disabled selected>-</option>
+                                  <option value="true">Yes</option>
+                                  <option value="false">No</option>
+                                </select>
+                            </th>
+                            <th class="text-center">
+                                <form><input id="tNOTES" type="text" value="NOTES"></form> 
+                            </th>
+                            <th class="text-center">
+                                <button class = "btn btn-default" type="submit" onclick="addFunction()">ADD</button>
+                            </th>
+                        <script>
+                            function addFunction(){ 
+                                var Instruments = firebase.database().ref("Instruments");
+                                var BRAND = $("#tBRAND").val();
+                                var CONDITION = $("#tCONDITION").val();
+                                var HASMOUTHPIECE = $("#HASMOUTHPIECE").val();
+                                var NOTES = $("#tNOTES").val();
+                                var TYPE = $("#tTYPE").val();
+                                var SERIAL = $("#tSERIAL").val();
+                                Instruments.push({
+								"BRAND": BRAND,
+								"CONDITION": CONDITION,
+								"HAS MOUTHPIECE": HASMOUTHPIECE,
+								"NOTES": NOTES,
+								"TYPE": TYPE,
+                                "SERIAL": SERIAL
+							  });
+                                window.location.reload();
+                            }
+                        </script>
+                        <tr>                            
+                        </tr>
+                    </thead>
+                    <tbody id="table_body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div></div>
+</body>
+</html>
