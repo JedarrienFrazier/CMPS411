@@ -16,10 +16,11 @@
     <!-- <link rel="stylesheet" href="assets/css/styles.css"> -->
     <!-- <link rel="stylesheet" href="indexStyle.css"> -->
     <!----------------------------------------------------------->
-    <link rel="stylesheet" href="tingle.min.css"> <!-- style sheet for tingle -->
+    <link rel="stylesheet" href="assets/tingle/tingle.min.css"> <!-- style sheet for tingle -->
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body style="background-color: #006633">
     <!-- FIRE BASE -->
     <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
     <script>
@@ -37,7 +38,7 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <!-- TINGLE -js only modals- -->
-    <script src="tingle.min.js"></script>
+    <script src="assets/tingle/tingle.min.js"></script>
     <!-- BOOTSTRAP -->
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- CUSTOM SCRIPTS HERE -->
@@ -48,12 +49,12 @@
     
     <p></p> <!-- what is this line for? -->
         
-    <h1>SELU Music Department's Equipment Management System</h1>
+    <h1><font color=#eea236>Southeastern Louisiana University</font></h1>
             <div class="panel panel-default panel-table">
               <div class="panel-heading">
                 <div class="row">
                   <div class="col col-md-6">
-                    <h3 class="panel-title" style="color: #e8d011">Equipment Check In/Out</h3>
+                    <h3 class="panel-title" style="color: black">Music Equipment Check In/Out</h3>
                   </div>
                   <div class="col col-xs-6 ">
 					  <!-- Trigger the modal with a button 
@@ -146,6 +147,9 @@
                     <thead>
                         <tr >
                             <th class="text-center">
+                                Instrument Serial #
+                            </th>
+                            <th class="text-center">
                                 Instrument Type
                             </th>
                             <th class="text-center">
@@ -164,6 +168,9 @@
                                  
                             </th>
                         </tr>
+                            <th class="text-center">
+                                <form><input id = "tSERIAL" type="text" value="TYPE"></form> 
+                            </th>
                             <th class="text-center">
                                 <form><input id = "tTYPE" type="text" value="TYPE"></form> 
                             </th>
@@ -202,12 +209,14 @@
                                 var HASMOUTHPIECE = $("#HASMOUTHPIECE").val();
                                 var NOTES = $("#tNOTES").val();
                                 var TYPE = $("#tTYPE").val();
+                                var SERIAL = $("#tSERIAL").val();
                                 Instruments.push({
 								"BRAND": BRAND,
 								"CONDITION": CONDITION,
 								"HAS MOUTHPIECE": HASMOUTHPIECE,
 								"NOTES": NOTES,
-								"TYPE": TYPE
+								"TYPE": TYPE,
+                                "SERIAL": SERIAL
 							  });
                                 window.location.reload();
                             }
