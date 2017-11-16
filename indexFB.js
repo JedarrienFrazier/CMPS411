@@ -90,36 +90,25 @@ $(document).ready(function(){
         var BRAND = $("#talkBRAND").val();
         var SERIAL = $("#talkSERIAL").val();
         var CONDITION = $("#talkCONDITION").val();
-        var HASMOUTHPIECE
-        if(document.getElementById('HASMOUTHPIECE_True')) {
-            HASMOUTHPIECE = $("#HASMOUTHPIECE_True").val();
-        }else if(document.getElementById('HASMOUTHPIECE_False')) {
-            HASMOUTHPIECE = $("#HASMOUTHPIECE_False").val();
-        } 
+        var HASMOUTHPIECE = $("#talkHASMOUTHPIECE").val();
         var NOTES = $("#talkNOTES").val();
         var TYPE = $("#talkTYPE").val();
-        
-        //-------issue with submit button lies here---------
+
         var updates = {};
-        updates['Instruments/' + globalID + '/BRAND'] = BRAND;
-        updates['Instruments/' + globalID + '/SERIAL'] = SERIAL;
-        updates['Instruments/' + globalID + '/CONDITION'] = CONDITION;
-        updates['Instruments/' + globalID + '/HAS MOUTHPIECE'] = HASMOUTHPIECE;
-        updates['Instruments/' + globalID + '/NOTES'] = NOTES;
-        updates['Instruments/' + globalID + '/TYPE'] = TYPE;
-        alert(updates);
-        firebase.database().ref().update(updates);
-        //---------------------------------------------------
-        
-        
-        /* Get the single most recent Instrument from the database and
-           update the table with its values. This is called every time the child_changed
-           event is triggered on the Instruments Firebase reference, which means
-           that this will update EVEN IF you don't refresh the page. Magic.   */          
-        Instruments.limitToLast(1).on('child_changed', function(childSnapshot) {
+        updates[globalID + '/BRAND'] = BRAND;
+        updates[globalID + '/SERIAL'] = SERIAL;
+        updates[globalID + '/CONDITION'] = CONDITION;
+        updates[globalID + '/HAS MOUTHPIECE'] = HASMOUTHPIECE;
+        updates[globalID + '/NOTES'] = NOTES;
+        updates[globalID + '/TYPE'] = TYPE;
+        Instruments.update(updates);
+       
+        //Figure out how to make this update the html to match the updated database...
+        Instruments.on("child_changed", function(snapshot) {
+            alert("child changed!");
             // Get the Instrument data from the most recent snapshot of data
             // added to the Instruments list in Firebase
-            Instrument = childSnapshot.val();
+            Instrument = snapshot.val();
             // Update the HTML to display the Instrument text
             $("#BRAND").html(Instrument.BRAND)
             $("#SERIAL").html(Instrument.SERIAL)
