@@ -57,12 +57,11 @@
                           var rowCount = rows.length;
                           var filter = document.getElementById('search').value.toUpperCase();
                           var tr = table.getElementsByTagName("tr");
-                          var cells, cellcount, cell, show;
+                          var cells, cellcount, cell;
                           hideRows(tr, rows); //hide rows by default
                           
                           //loop through rows of the table
                           for(var r = 0; r < rowCount; r++){
-                              show = false;
                               cells = rows[r].cells;
                               cellCount = cells.length;
                               
