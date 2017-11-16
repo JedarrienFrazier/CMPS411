@@ -55,6 +55,7 @@ $(document).ready(function(){
             setModalContent();
         },
         onClose: function() {
+            window.location.reload();
             console.log('modal closed');
         },
         beforeClose: function() {
