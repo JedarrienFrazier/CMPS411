@@ -22,23 +22,25 @@ $(document).ready(function(){
         var mouthpiece = snap.child("HAS MOUTHPIECE").val();
         var notes = snap.child("NOTES").val();
 		var key = snap.key;
-		//remove button
 
-        $("#rmbtn").off().on('click',function () {
-			var id = $(this).closest('tr').attr("id"); //retrieves the key from the id on tr element
-            $(this).closest('tr').remove();            //removes element from UI
-			rootRef.child(id).remove();                //removes entry from DB
+        //code for buttons
+        $("tr").off().on('click',function() {
+            var id = $(this).closest('tr').attr("id");
+            rmid = "#rmbtn" + id;
+            edid = "#edbtn" + id;
+            //code for remove
+            if($(rmid + ":hover").length > 0){
+                $(this).closest('tr').remove();            //removes element from UI
+			    rootRef.child(id).remove();                //removes entry from DB
+            }
+            //code for edit
+            else if($(edid + ":hover").length > 0){
+                modalEdit.open();                          //open modal
+			    setID(id);			                       //pass off id to editBtnCLick method for..?
+            }
         });
-		
-		//edit button
-		$("#edtbtn").off().on('click',function () {
-			var id = $(this).closest('tr').attr("id"); //retrieves the key from the id on tr element
-            modalEdit.open();                          //open modal
-			setID(id);			                       //pass off id to editBtnCLick method for..?
-        });
-        
         //this code adds
-        $('#table_body').append('<tr id="'+ key +'"><td>' + serial + '</td><td>' + type + '</td><td>' + brand + '</td><td>' + condition + '</td><td>' + mouthpiece + '</td><td>' + notes + '</td><td><button id="rmbtn">Remove</button></td><td><button id="edtbtn">Edit</button></td></tr>');
+        $('#table_body').append('<tr id="'+ key +'"><td>' + serial + '</td><td>' + type + '</td><td>' + brand + '</td><td>' + condition + '</td><td>' + mouthpiece + '</td><td>' + notes + '</td><td><button id="rmbtn' + key +'">Remove</button></td><td><button id = "edbtn' + key +'">Edit</button></td></tr>');
     })
 
 //TINGLE MODAL CODE FOR EDIT BUTTON
@@ -53,7 +55,6 @@ $(document).ready(function(){
             setModalContent();
         },
         onClose: function() {
-            window.location.reload();
             console.log('modal closed');
         },
         beforeClose: function() {
@@ -73,7 +74,7 @@ $(document).ready(function(){
             var mouthpiece = snap.child("HAS MOUTHPIECE").val();
             var notes = snap.child("NOTES").val();
             
-            modalEdit.setContent('<h3>Edit Details  </h3><form id="InstrumentForm"><div class="form-group"><label for="talkBRAND">Brand</label><input class="form-control" id="talkBRAND" placeholder="'+ brand +'"></div><div class="form-group"><label for="talkSERIAL">Serial #</label><input class="form-control" id="talkSERIAL" placeholder="'+ serial +'"></div><div class="form-group"><label for="talkCONDITION">Condition    </label><br><select id="talkCONDITION"><option value="" disabled selected>'+ condition +'</option><option value="New">New</option><option value="Good">Good</option><option value="Fine">Fine</option><option value="Works">Works</option><option value="Poor">Poor</option><option value="Bad">Bad</option><option value="???">???</option></select></div><div class="form-group"><label for="talkHASMOUTHPIECE">Does the instrument have a mouthpiece?    </label><br><select id="talkHASMOUTHPIECE"><option value="" disabled selected>'+ mouthpiece +'</option><option value="true">Yes</option><option value="false">No</option><option value="null">NA</option></select></div><div class="form-group"><label for="talkNOTES">Notes</label><input class="form-control" id="talkNOTES" placeholder="'+ notes +'"></div><div class="form-group"><label for="talkTYPE">Type</label><input class="form-control" id="talkTYPE" placeholder="'+ type +'"></div>');
+            modalEdit.setContent('<h3>Edit Details  </h3><form id="InstrumentForm"><div class="form-group"><div class="form-group"><label>Serial #</label><input class="form-control" id="talkSERIAL" value="'+ serial +'"></div><div class="form-group"><label>Type</label><input class="form-control" id="talkTYPE" value="'+ type +'"></div><label>Brand</label><input class="form-control" id="talkBRAND" value="'+ brand +'"></div><div class="form-group"><label>Condition</label><br><select id="talkCONDITION"><option value="'+ condition +'"></option><option value="New">New</option><option value="Good">Good</option><option value="Fine">Fine</option><option value="Works">Works</option><option value="Poor">Poor</option><option value="Bad">Bad</option><option value="???">???</option></select></div><div class="form-group"><label>Does the instrument have a mouthpiece?</label><br><select id="talkHASMOUTHPIECE"><option value="'+ mouthpiece +'"></option><option value="true">Yes</option><option value="false">No</option><option value="null">NA</option></select></div><div class="form-group"><label>Notes</label><input class="form-control" id="talkNOTES" value="'+ notes +'"></div>');
           });
     }
     
@@ -90,15 +91,15 @@ $(document).ready(function(){
         var SERIAL = $("#talkSERIAL").val();
         var CONDITION = $("#talkCONDITION").val();
         var HASMOUTHPIECE
-        if(document.getElementById('HASMOUTHPIECE_True').checked) {
+        if(document.getElementById('HASMOUTHPIECE_True')) {
             HASMOUTHPIECE = $("#HASMOUTHPIECE_True").val();
-        }else if(document.getElementById('HASMOUTHPIECE_False').checked) {
+        }else if(document.getElementById('HASMOUTHPIECE_False')) {
             HASMOUTHPIECE = $("#HASMOUTHPIECE_False").val();
         } 
         var NOTES = $("#talkNOTES").val();
         var TYPE = $("#talkTYPE").val();
         
-        
+        //-------issue with submit button lies here---------
         var updates = {};
         updates['Instruments/' + globalID + '/BRAND'] = BRAND;
         updates['Instruments/' + globalID + '/SERIAL'] = SERIAL;
@@ -106,13 +107,16 @@ $(document).ready(function(){
         updates['Instruments/' + globalID + '/HAS MOUTHPIECE'] = HASMOUTHPIECE;
         updates['Instruments/' + globalID + '/NOTES'] = NOTES;
         updates['Instruments/' + globalID + '/TYPE'] = TYPE;
+        alert(updates);
         firebase.database().ref().update(updates);
+        //---------------------------------------------------
+        
         
         /* Get the single most recent Instrument from the database and
-           update the table with its values. This is called every time the child_added
+           update the table with its values. This is called every time the child_changed
            event is triggered on the Instruments Firebase reference, which means
            that this will update EVEN IF you don't refresh the page. Magic.   */          
-        Instruments.limitToLast(1).on('child_added', function(childSnapshot) {
+        Instruments.limitToLast(1).on('child_changed', function(childSnapshot) {
             // Get the Instrument data from the most recent snapshot of data
             // added to the Instruments list in Firebase
             Instrument = childSnapshot.val();
