@@ -10,6 +10,7 @@ $(document).ready(function(){
     //on child_added event (see firebase doc), do things
     rootRef.on("child_added", snap =>{
         
+		var W = snap.child("W").val();
         var type = snap.child("TYPE").val();
         var serial = snap.child("SERIAL").val();
         var brand = snap.child("BRAND").val();
@@ -48,7 +49,7 @@ $(document).ready(function(){
             }
         });
         //this code adds the data to the table
-        $('#table_body').append('<tr id="'+ key +'"><td>' + serial + '</td><td>' + type + '</td><td>' + brand + '</td><td>' + condition + '</td><td>' + mouthpiece + '</td><td>' + notes + '</td><td>' + status + '</td><td><center><button class="btn btn-danger btn-sm" id="rmbtn' + key +'">Remove</button></center></td><td><center><button class="btn btn-info btn-sm" id = "edbtn' + key +'">Edit</button></center></td></tr>');
+        $('#table_body').append('<tr id="'+ key +'"><td>' +W + '</td><td>' + serial + '</td><td>' + type + '</td><td>' + brand + '</td><td>' + condition + '</td><td>' + mouthpiece + '</td><td>' + notes + '</td><td>' + status + '</td><td><center><button class="btn btn-danger btn-sm" id="rmbtn' + key +'">Remove</button></center></td><td><center><button class="btn btn-info btn-sm" id = "edbtn' + key +'">Edit</button></center></td></tr>');
     })
 
 //TINGLE MODAL CODE FOR EDIT BUTTON
@@ -76,6 +77,7 @@ $(document).ready(function(){
         var childRef = firebase.database().ref().child("Instruments").child(id);
         //vars for loading into edit
         childRef.on("value", snap => {
+			var W = snap.child("W").val();
             var type = snap.child("TYPE").val();
             var serial = snap.child("SERIAL").val();
             var brand = snap.child("BRAND").val();
@@ -86,7 +88,7 @@ $(document).ready(function(){
 			var make = snap.child("MAKE").val();
             var status = snap.child("STATUS").val();
             
-            modalEdit.setContent('<h3>Edit Details  </h3><form id="InstrumentForm"><div class="form-group"><div class="form-group"><label>Serial #</label><input class="form-control" id="talkSERIAL" value="'+ serial +'"></div><div class="form-group"><label>Type</label><input class="form-control" id="talkTYPE" value="'+ type +'"></div><label>Brand</label><input class="form-control" id="talkBRAND" value="'+ brand +'"></div><div class="form-group"><label>Condition</label><br><select id="talkCONDITION"><option value="'+ condition +'"></option><option value="New">New</option><option value="Good">Good</option><option value="Fine">Fine</option><option value="Works">Works</option><option value="Poor">Poor</option><option value="Bad">Bad</option><option value="???">???</option></select></div><div class="form-group"><label>Does the instrument have a mouthpiece?</label><br><select id="talkHASMOUTHPIECE"><option value="'+ mouthpiece +'"></option><option value="true">Yes</option><option value="false">No</option><option value="null">NA</option></select></div><div class="form-group"><label>Notes</label><input class="form-control" id="talkNOTES" value="'+ notes +'"><div class="form-group"><label>SLU</label><input class="form-control" id="talkSLU" value="'+ slu +'"><div class="form-group"><label>Make</label><input class="form-control" id="talkMAKE" value="'+ make +'"><div class="form-group"></div><div class="form-group"><label>Checked Out</label><input class="form-control" id="talkSTATUS" value="'+ status +'"> </div>');
+            modalEdit.setContent('<h3>Edit Details  </h3><form id="InstrumentForm"><div class="form-group"><div class="form-group"><label>W #</label><input class="form-control" id="talkW" value="'+ W +'"></div><div class="form-group"><div class="form-group"><label>Serial #</label><input class="form-control" id="talkSERIAL" value="'+ serial +'"></div><div class="form-group"><label>Type</label><input class="form-control" id="talkTYPE" value="'+ type +'"></div><label>Brand</label><input class="form-control" id="talkBRAND" value="'+ brand +'"></div><div class="form-group"><label>Condition</label><br><select id="talkCONDITION"><option value="'+ condition +'"></option><option value="New">New</option><option value="Good">Good</option><option value="Fine">Fine</option><option value="Works">Works</option><option value="Poor">Poor</option><option value="Bad">Bad</option><option value="???">???</option></select></div><div class="form-group"><label>Does the instrument have a mouthpiece?</label><br><select id="talkHASMOUTHPIECE"><option value="'+ mouthpiece +'"></option><option value="true">Yes</option><option value="false">No</option><option value="null">NA</option></select></div><div class="form-group"><label>Notes</label><input class="form-control" id="talkNOTES" value="'+ notes +'"><div class="form-group"><label>SLU Tag</label><input class="form-control" id="talkSLU" value="'+ slu +'"><div class="form-group"><label>Model</label><input class="form-control" id="talkMAKE" value="'+ make +'"><div class="form-group"></div><div class="form-group"><label>Status</label><input class="form-control" id="talkSTATUS" value="'+ status +'"> </div>');
           });
     }
     
@@ -95,6 +97,7 @@ $(document).ready(function(){
         var Instruments = firebase.database().ref("Instruments");
         
         // Get input values from each of the form elements
+        var W = $("#talkW").val();
         var BRAND = $("#talkBRAND").val();
         var SERIAL = $("#talkSERIAL").val();
         var CONDITION = $("#talkCONDITION").val();
@@ -106,6 +109,7 @@ $(document).ready(function(){
         var STATUS = $("#talkSTATUS").val();
 
         var updates = {};
+        updates[globalID + '/W'] = W;
         updates[globalID + '/BRAND'] = BRAND;
         updates[globalID + '/SERIAL'] = SERIAL;
         updates[globalID + '/CONDITION'] = CONDITION;
@@ -124,6 +128,7 @@ $(document).ready(function(){
             // added to the Instruments list in Firebase
             Instrument = snapshot.val();
             // Update the HTML to display the Instrument text
+            $("#W").html(Instrument.W)
             $("#BRAND").html(Instrument.BRAND)
             $("#SERIAL").html(Instrument.SERIAL)
             $("#CONDITION").html(Instrument.CONDITION)
@@ -157,10 +162,11 @@ $(document).ready(function(){
         }
     });
     function setAddModalContent(){
-        modalAdd.setContent('<h3>Add Instrument</h3><form id="InstrumentForm"><div class="form-group"><div class="form-group"><label>Serial #</label><input class="form-control" id="talkSERIAL" placeholder="Serial #"></div><div class="form-group"><label>Type</label><input class="form-control" id="talkTYPE" placeholder="Instrument Type"></div><label>Brand</label><input class="form-control" id="talkBRAND" placeholder="Brand"></div><div class="form-group"><label>Condition</label><br><select id="talkCONDITION"><option></option><option value="New">New</option><option value="Good">Good</option><option value="Fine">Fine</option><option value="Works">Works</option><option value="Poor">Poor</option><option value="Bad">Bad</option><option value="???">???</option></select></div><div class="form-group"><label>Does the instrument have a mouthpiece?</label><br><select id="talkHASMOUTHPIECE"><option></option><option value="true">Yes</option><option value="false">No</option><option value="null">NA</option></select></div><div class="form-group"><label>Notes</label><input class="form-control" id="talkNOTES" placeholder="Notes"></div><div class="form-group"><label>SLU</label><input class="form-control" id="talkSLU" placeholder="SLU"><div class="form-group"><label>Make</label><input class="form-control" id="talkMAKE" placeholder="The make of the instrument"></div><div class="form-group"><label>Checked Out</label><input class="form-control" id="talkSTATUS" placeholder="In/Out"></div>');
+        modalAdd.setContent('<h3>Add Instrument</h3><form id="InstrumentForm"><div class="form-group"><div class="form-group"><label>W #</label><input class="form-control" id="talkW" placeholder="W #"></div><div class="form-group"><div class="form-group"><label>Serial #</label><input class="form-control" id="talkSERIAL" placeholder="Serial #"></div><div class="form-group"><label>Type</label><input class="form-control" id="talkTYPE" placeholder="Instrument Type"></div><label>Brand</label><input class="form-control" id="talkBRAND" placeholder="Brand"></div><div class="form-group"><label>Condition</label><br><select id="talkCONDITION"><option></option><option value="New">New</option><option value="Good">Good</option><option value="Fine">Fine</option><option value="Works">Works</option><option value="Poor">Poor</option><option value="Bad">Bad</option><option value="???">???</option></select></div><div class="form-group"><label>Does the instrument have a mouthpiece?</label><br><select id="talkHASMOUTHPIECE"><option></option><option value="true">Yes</option><option value="false">No</option><option value="null">NA</option></select></div><div class="form-group"><label>Notes</label><input class="form-control" id="talkNOTES" placeholder="Notes"></div><div class="form-group"><label>SLU Tag</label><input class="form-control" id="talkSLU" placeholder="SLU Tag"><div class="form-group"><label>Model</label><input class="form-control" id="talkMAKE" placeholder="The model of the instrument"></div><div class="form-group"><label>Status</label><input class="form-control" id="talkSTATUS" placeholder="In/Out"></div>');
     }
     modalAdd.addFooterBtn('Submit', 'tingle-btn tingle-btn--primary', function() {
         var Instruments = firebase.database().ref("Instruments");
+        var W = $("#talkW").val();
         var BRAND = $("#talkBRAND").val();
         var SERIAL = $("#talkSERIAL").val();
         var CONDITION = $("#talkCONDITION").val();
@@ -171,6 +177,7 @@ $(document).ready(function(){
         var TYPE = $("#talkTYPE").val();
         var STATUS = $("#talkSTATUS").val();
         Instruments.push({
+            "W": W,
             "BRAND": BRAND,
             "CONDITION": CONDITION,
             "HAS MOUTHPIECE": HASMOUTHPIECE,
@@ -186,7 +193,7 @@ $(document).ready(function(){
             // added to the Instruments list in Firebase
             Instrument = childSnapshot.val();
             // Update the HTML to display the Instrument text
-            $("#BRAND").html(Instrument.BRAND)
+            $("#W").html(Instrument.W)
             $("#SERIAL").html(Instrument.SERIAL)
             $("#CONDITION").html(Instrument.CONDITION)
             $("#HASMOUTHPIECE").html(Instrument.HASMOUTHPIECE)
