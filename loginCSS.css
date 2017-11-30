@@ -1,9 +1,15 @@
 h2{
-    font-size: 40px !important;
+    color: orange !important;
+    font-size: 35px !important;
 }
 body{
     background-color: #e6e6e6;
 }
 #email, #password{
+    padding: 5px;
     border-color: black;
+}
+#titleHead{
+    padding: 10px;
+    background-color: #00802b !important;
 }
