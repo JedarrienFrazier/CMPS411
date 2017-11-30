@@ -1,0 +1,20 @@
+#searchbar{
+    color: black;
+    font-size: 20px !important;
+    height: 35px !important;
+    float: right;
+    width: 150px;
+    padding: 5px;
+}
+#addButton{
+    float: right;
+    padding: 0px;
+    width: 60px;
+    height: 35px !important;
+}
+#title{
+    font-size: 35px;
+}
+tr{
+    text-align: center;
+}
