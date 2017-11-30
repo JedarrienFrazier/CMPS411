@@ -1,0 +1,9 @@
+h2{
+    font-size: 40px !important;
+}
+body{
+    background-color: #e6e6e6;
+}
+#email, #password{
+    border-color: black;
+}
